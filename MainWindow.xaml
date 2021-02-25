@@ -6,6 +6,20 @@
         xmlns:local="clr-namespace:OODProject"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    
+    <Window.Resources>
+        
+        <DataTemplate x:Key="lbxTemplate">
+            <Grid>
+                <TextBlock
+                    Text="{Binding}"
+                    TextWrapping="Wrap"
+                />
+            </Grid>
+        </DataTemplate>
+        
+    </Window.Resources>
+    
     <TabControl TabStripPlacement="Top">
 
         <TabItem Header="Info">
@@ -33,7 +47,7 @@
 
                 <TextBlock x:Name="tblkClock" HorizontalAlignment="Left" Height="39" Margin="257.2,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" FontSize="24" FontWeight="Bold" TextAlignment="Center" Grid.Column="1" Foreground="#FFDD1616"/>
 
-                <ListBox x:Name="lstGames" HorizontalAlignment="Left" Height="305" Margin="507.2,77,0,0" VerticalAlignment="Top" Width="217" Grid.Column="1"/>
+                <ListBox x:Name="lstGames" ItemTemplate="{StaticResource lbxTemplate}" HorizontalAlignment="Left" Height="305" Margin="507.2,77,0,0" VerticalAlignment="Top" Width="240" Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
             </Grid>
         </TabItem>
 
