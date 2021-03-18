@@ -25,6 +25,7 @@ namespace OODProject
     {
         //Create List
         List<Company> allCompanies = new List<Company>();
+        List<Company> filteredCompanies = new List<Company>();
 
         public MainWindow()
         {
@@ -109,5 +110,41 @@ namespace OODProject
             }
         }
 
+        //Search Bar
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            filteredCompanies.Clear();
+
+            lstCompany.ItemsSource = null;
+            string search = tbxSearch.Text.ToLower();
+
+            if (search == null)
+            {
+                lstCompany.ItemsSource = allCompanies;   
+            }
+            else if (Int32.TryParse(search, out int year)) // Checks if user is searching for a specific year and parses it into an int
+            {
+                foreach (var company in allCompanies)
+                {
+                    if (company.YearFormed.Equals(year))
+                    {
+                        filteredCompanies.Add(company);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var company in allCompanies)
+                {
+                    if (company.CompanyName.ToLower().Contains(search))
+                    {
+                        filteredCompanies.Add(company);
+                    }
+                }
+            }
+            
+            lstCompany.ItemsSource = filteredCompanies;
+            tbxSearch.Text = "";
+        }
     }
 }

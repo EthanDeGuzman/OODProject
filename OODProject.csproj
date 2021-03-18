@@ -100,5 +100,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="images\activision.png" />
+    <Resource Include="images\ea.png" />
+    <Resource Include="images\epic.png" />
+    <Resource Include="images\ubisoft.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
