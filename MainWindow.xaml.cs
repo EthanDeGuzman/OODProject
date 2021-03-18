@@ -146,5 +146,55 @@ namespace OODProject
             lstCompany.ItemsSource = filteredCompanies;
             tbxSearch.Text = "";
         }
+
+        private void btnCompany_Click(object sender, RoutedEventArgs e)
+        {
+            lblCompany.Visibility = Visibility.Hidden;
+            btnCompany.Visibility = Visibility.Hidden;
+            btnGame.Visibility = Visibility.Hidden;
+
+            ShowAddCompany();
+        }
+
+        private void btnGame_Click(object sender, RoutedEventArgs e)
+        {
+            lblCompany.Visibility = Visibility.Hidden;
+            btnCompany.Visibility = Visibility.Hidden;
+            btnGame.Visibility = Visibility.Hidden;
+
+            ShowAddGame();
+        }
+
+        //Method to Show textbox and labels needed to add a company
+        private void ShowAddCompany()
+        {
+            lblAddCompany.Visibility = Visibility.Visible;
+            lblCompanyName.Visibility = Visibility.Visible;
+            lblYearFormed.Visibility = Visibility.Visible;
+            lblFounders.Visibility = Visibility.Visible;
+
+            tbxCompanyName.Visibility = Visibility.Visible;
+            tbxYearFormed.Visibility = Visibility.Visible;
+            tbxFounders.Visibility = Visibility.Visible;
+            btnAdd.Visibility = Visibility.Visible;
+        }
+
+        //Method to show textbox and labels needed to add a game
+        private void ShowAddGame()
+        {
+            lblAddGame.Visibility = Visibility.Visible;
+            lblGameName.Visibility = Visibility.Visible;
+            lblYearReleased.Visibility = Visibility.Visible;
+            lblPrice.Visibility = Visibility.Visible;
+            lblRating.Visibility = Visibility.Visible;
+            lblDescription.Visibility = Visibility.Visible;
+
+            tbxGameName.Visibility = Visibility.Visible;
+            tbxYearReleased.Visibility = Visibility.Visible;
+            tbxPrice.Visibility = Visibility.Visible;
+            tbxRating.Visibility = Visibility.Visible;
+            tbxDescription.Visibility = Visibility.Visible;
+            btnAdd.Visibility = Visibility.Visible;
+        }
     }
 }
