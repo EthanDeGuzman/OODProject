@@ -55,13 +55,6 @@ namespace OODProject
                 lstCompany.ItemsSource = allCompanies;
             }
 
-            //Code to Write to JSON
-            //string json = JsonConvert.SerializeObject(allCompanies, Formatting.Indented);
-            //using(StreamWriter sw = new StreamWriter(@"../Company.json"))
-            //{
-            //    sw.Write(json);
-            //}
-
         }
 
         //Displays The Time on the window and in an hour/minutes/seconds/format
@@ -152,8 +145,8 @@ namespace OODProject
             lblCompany.Visibility = Visibility.Hidden;
             btnCompany.Visibility = Visibility.Hidden;
             btnGame.Visibility = Visibility.Hidden;
-
             ShowAddCompany();
+
         }
 
         private void btnGame_Click(object sender, RoutedEventArgs e)
@@ -161,7 +154,6 @@ namespace OODProject
             lblCompany.Visibility = Visibility.Hidden;
             btnCompany.Visibility = Visibility.Hidden;
             btnGame.Visibility = Visibility.Hidden;
-
             ShowAddGame();
         }
 
@@ -195,6 +187,34 @@ namespace OODProject
             tbxRating.Visibility = Visibility.Visible;
             tbxDescription.Visibility = Visibility.Visible;
             btnAdd.Visibility = Visibility.Visible;
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            string Name = tbxCompanyName.Text;
+            int yearFormed = int.Parse(tbxYearFormed.Text);
+            string founders = tbxFounders.Text;
+
+            Company tempCompany = new Company(Name, yearFormed, founders);
+
+            allCompanies.Add(tempCompany);
+            //string name = tbxGameName.Text;
+            //int yearReleased = int.Parse(tbxYearReleased.Text);
+            //double price = double.Parse(tbxPrice.Text);
+            //string description = tbxDescription.Text;
+            //string avgRating = tbxRating.Text;
+
+            //Games tempGame = new Games(name, yearReleased, price, description, avgRating);
+
+            //tempCompany.Add(tempGame);
+
+            //Code to Write to JSON
+            string json = JsonConvert.SerializeObject(allCompanies, Formatting.Indented);
+            using (StreamWriter sw = new StreamWriter(@"../Company.json"))
+            {
+                sw.Write(json);
+            }
+
         }
     }
 }
