@@ -16,6 +16,9 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Newtonsoft.Json;
 
+/*
+    Extra Feature is Implementation of IComparer Method
+*/
 namespace OODProject
 {
     /// <summary>
@@ -138,76 +141,20 @@ namespace OODProject
             
             lstCompany.ItemsSource = filteredCompanies;
             tbxSearch.Text = "";
-        }
-
-        private void btnCompany_Click(object sender, RoutedEventArgs e)
-        {
-            lblCompany.Visibility = Visibility.Hidden;
-            btnCompany.Visibility = Visibility.Hidden;
-            btnGame.Visibility = Visibility.Hidden;
-            ShowAddCompany();
 
         }
 
-        private void btnGame_Click(object sender, RoutedEventArgs e)
+
+        private void btnAddCompany_Click(object sender, RoutedEventArgs e)
         {
-            lblCompany.Visibility = Visibility.Hidden;
-            btnCompany.Visibility = Visibility.Hidden;
-            btnGame.Visibility = Visibility.Hidden;
-            ShowAddGame();
-        }
+                string Name = tbxCompanyName.Text;
+                int yearFormed = int.Parse(tbxYearFormed.Text);
+                string founders = tbxFounders.Text;
 
-        //Method to Show textbox and labels needed to add a company
-        private void ShowAddCompany()
-        {
-            lblAddCompany.Visibility = Visibility.Visible;
-            lblCompanyName.Visibility = Visibility.Visible;
-            lblYearFormed.Visibility = Visibility.Visible;
-            lblFounders.Visibility = Visibility.Visible;
+                Company tempCompany = new Company(Name, yearFormed, founders);
 
-            tbxCompanyName.Visibility = Visibility.Visible;
-            tbxYearFormed.Visibility = Visibility.Visible;
-            tbxFounders.Visibility = Visibility.Visible;
-            btnAdd.Visibility = Visibility.Visible;
-        }
-
-        //Method to show textbox and labels needed to add a game
-        private void ShowAddGame()
-        {
-            lblAddGame.Visibility = Visibility.Visible;
-            lblGameName.Visibility = Visibility.Visible;
-            lblYearReleased.Visibility = Visibility.Visible;
-            lblPrice.Visibility = Visibility.Visible;
-            lblRating.Visibility = Visibility.Visible;
-            lblDescription.Visibility = Visibility.Visible;
-
-            tbxGameName.Visibility = Visibility.Visible;
-            tbxYearReleased.Visibility = Visibility.Visible;
-            tbxPrice.Visibility = Visibility.Visible;
-            tbxRating.Visibility = Visibility.Visible;
-            tbxDescription.Visibility = Visibility.Visible;
-            btnAdd.Visibility = Visibility.Visible;
-        }
-
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            string Name = tbxCompanyName.Text;
-            int yearFormed = int.Parse(tbxYearFormed.Text);
-            string founders = tbxFounders.Text;
-
-            Company tempCompany = new Company(Name, yearFormed, founders);
-
-            allCompanies.Add(tempCompany);
-            //string name = tbxGameName.Text;
-            //int yearReleased = int.Parse(tbxYearReleased.Text);
-            //double price = double.Parse(tbxPrice.Text);
-            //string description = tbxDescription.Text;
-            //string avgRating = tbxRating.Text;
-
-            //Games tempGame = new Games(name, yearReleased, price, description, avgRating);
-
-            //tempCompany.Add(tempGame);
-
+                allCompanies.Add(tempCompany);
+            
             //Code to Write to JSON
             string json = JsonConvert.SerializeObject(allCompanies, Formatting.Indented);
             using (StreamWriter sw = new StreamWriter(@"../Company.json"))
@@ -215,6 +162,40 @@ namespace OODProject
                 sw.Write(json);
             }
 
+            lstCompanyAdd.ItemsSource = null;
+            lstCompanyAdd.ItemsSource = allCompanies;
+        }
+
+        private void btnAddGame_Click(object sender, RoutedEventArgs e)
+        {
+            Company tempCompany = lstCompanyGameTab.SelectedItem as Company;
+
+            string name = tbxGameName.Text;
+            int yearReleased = int.Parse(tbxYearReleased.Text);
+            double price = double.Parse(tbxPrice.Text);
+            string description = tbxDescription.Text;
+            string avgRating = tbxRating.Text;
+
+            Games tempGame = new Games(name, yearReleased, price, description, avgRating);
+
+            tempCompany.GamesList.Add(tempGame);
+
+            //Code to Write to JSON
+            string json = JsonConvert.SerializeObject(allCompanies, Formatting.Indented);
+            using (StreamWriter sw = new StreamWriter(@"../Company.json"))
+            {
+                sw.Write(json);
+            }
+        }
+
+        private void addCompanyTab_Loaded(object sender, RoutedEventArgs e)
+        {
+            lstCompanyAdd.ItemsSource = allCompanies;
+        }
+
+        private void AddGame_Loaded(object sender, RoutedEventArgs e)
+        {
+            lstCompanyGameTab.ItemsSource = allCompanies;
         }
     }
 }

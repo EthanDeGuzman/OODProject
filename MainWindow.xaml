@@ -49,7 +49,7 @@
             </Grid>
         </TabItem>
 
-        <TabItem Header="Add">
+        <TabItem x:Name="addCompanyTab" Header="Add Company" Loaded="addCompanyTab_Loaded">
             <Grid Margin="0,-2,0,2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -63,33 +63,68 @@
                     <ColumnDefinition Width="36*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label x:Name="lblCompany" Content="Would you like to add a company or a game?" Grid.Column="1" HorizontalAlignment="Left" Margin="113.2,35.6,0,0" Grid.Row="1" VerticalAlignment="Top" Height="55" Width="565" FontWeight="Bold" FontSize="24" Visibility="Visible"/>
-                <Button x:Name="btnCompany" Content="Company" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" Grid.Column="1" Margin="195.2,104.6,0,0" Grid.Row="1" Height="37" FontSize="24" FontWeight="Bold" Click="btnCompany_Click" Visibility="Visible"/>
-                <Button x:Name="btnGame" Content="Game" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" Grid.Column="1" Margin="399.2,104.6,0,0" Grid.Row="1" Height="37" FontWeight="Bold" FontSize="24" Click="btnGame_Click" Visibility="Visible"/>
+                <Button x:Name="btnAddCompany" Content="Add Company" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Grid.Column="1" Margin="120.2,329.6,0,0" Grid.Row="1" Height="31" FontWeight="Bold" FontSize="20" Visibility="Visible" Click="btnAddCompany_Click"/>
+                <Label x:Name="lblCompanyName" Content="Company Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="19.2,108.6,0,0" Grid.Row="1" Width="101" Visibility="Visible"/>
+                <TextBox x:Name="tbxCompanyName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="125.2,111.6,0,0" Grid.Row="1" Visibility="Visible"/>
+                <Label x:Name="lblAddCompany" Content="Add Company" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="61.2,48.6,0,0" Width="150" FontWeight="Bold" FontSize="20" Visibility="Visible" Grid.Row="1"/>
+                <Label x:Name="lblYearFormed" Content="Year Formed:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="19.2,159.6,0,0" Grid.Row="1" Width="101" Height="23" Visibility="Visible"/>
+                <TextBox x:Name="tbxYearFormed" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="125.2,159.6,0,0" Grid.Row="1" Visibility="Visible" RenderTransformOrigin="-0.97,0.626"/>
+                <Label x:Name="lblFounders" Content="Founders:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="14.2,244.6,0,0" Grid.Row="1" Width="101" Visibility="Visible"/>
+                <TextBox x:Name="tbxFounders" HorizontalAlignment="Left" Height="107" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" Grid.Column="1" Margin="120.2,207.6,0,0" Grid.Row="1" Visibility="Visible"/>
+                <ListBox x:Name="lstCompanyAdd" HorizontalAlignment="Left" Height="342" VerticalAlignment="Top" Width="284" Grid.Column="1" Margin="437.2,18.6,0,0" Grid.Row="1"/>
 
-                <Label x:Name="lblCompanyName" Content="Company Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="195.2,48.6,0,0" Grid.Row="1" Width="101" Visibility="Hidden"/>
-                <TextBox x:Name="tbxCompanyName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="310.2,51.6,0,0" Grid.Row="1" Visibility="Hidden"/>
-                <Label x:Name="lblAddCompany" Content="Add Company" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="270.2,9.6,0,0" Grid.Row="1" Width="150" FontWeight="Bold" FontSize="20" Visibility="Hidden"/>
-                <Label x:Name="lblYearFormed" Content="Year Formed:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="195.2,98.6,0,0" Grid.Row="1" Width="101" Height="23" Visibility="Hidden"/>
-                <TextBox x:Name="tbxYearFormed" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="310.2,98.6,0,0" Grid.Row="1" Visibility="Hidden"/>
-                <Label x:Name="lblFounders" Content="Founders:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="195.2,146.6,0,0" Grid.Row="1" Width="101" Visibility="Hidden"/>
-                <TextBox x:Name="tbxFounders" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="310.2,149.6,0,0" Grid.Row="1" Visibility="Hidden"/>
 
-                <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Grid.Column="1" Margin="270.2,332.6,0,0" Grid.Row="1" Height="31" FontWeight="Bold" FontSize="20" Visibility="Hidden" Click="btnAdd_Click"/>
-
-                <Label x:Name="lblGameName" Content="Game Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="195.2,48.6,0,0" Grid.Row="1" Width="101" Visibility="Hidden"/>
-                <TextBox x:Name="tbxGameName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="310.2,51.6,0,0" Grid.Row="1" Visibility="Hidden"/>
-                <Label x:Name="lblAddGame" Content="Add Game" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="270.2,9.6,0,0" Grid.Row="1" Width="150" FontWeight="Bold" FontSize="20" Visibility="Hidden"/>
-                <Label x:Name="lblYearReleased" Content="Year Released:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="195.2,95.6,0,0" Grid.Row="1" Width="101" Height="23" Visibility="Hidden"/>
-                <TextBox x:Name="tbxYearReleased" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="310.2,98.6,0,0" Grid.Row="1" Visibility="Hidden"/>
-                <Label x:Name="lblDescription" Content="Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="195.2,261.6,0,0" Grid.Row="1" Width="101" Visibility="Hidden"/>
-                <TextBox x:Name="tbxDescription" HorizontalAlignment="Left" Height="78" TextWrapping="Wrap" VerticalAlignment="Top" Width="368" Grid.Column="1" Margin="310.2,238.6,0,0" Grid.Row="1" Visibility="Hidden"/>
-                <Label x:Name="lblPrice" Content="Price:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="195.2,146.6,0,0" Grid.Row="1" Width="101" Visibility="Hidden"/>
-                <TextBox x:Name="tbxPrice" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="310.2,149.6,0,0" Grid.Row="1" Visibility="Hidden"/>
-                <Label x:Name="lblRating" Content="Avg Rating:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="195.2,192.6,0,0" Grid.Row="1" Visibility="Hidden"/>
-                <TextBox x:Name="tbxRating" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="310.2,192.6,0,0" Grid.Row="1" Visibility="Hidden"/>
             </Grid>
         </TabItem>
+
+        <TabItem x:Name="AddGame" Header="Add Game" Loaded="AddGame_Loaded">
+            <Grid Margin="0,-2,0,2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="20*"/>
+
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="9*"/>
+                    <ColumnDefinition Width="153*"/>
+                    <ColumnDefinition Width="590*"/>
+                    <ColumnDefinition Width="36*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="btnAddGame" Content="Add Game" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Grid.Column="2" Margin="256,332.6,0,0" Grid.Row="1" Height="31" FontWeight="Bold" FontSize="20" Visibility="Visible" Click="btnAddGame_Click"/>
+
+                <Label x:Name="lblGameName" Content="Game Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="155,48.6,0,0" Grid.Row="1" Width="89" Visibility="Visible"/>
+                <TextBox x:Name="tbxGameName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="2" Margin="256,48.6,0,0" Grid.Row="1" Visibility="Visible"/>
+                <Label x:Name="lblAddGame" Content="Add Game" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="197,18,0,0" Width="150" FontWeight="Bold" FontSize="20" Visibility="Visible" Grid.RowSpan="2"/>
+                <Label x:Name="lblYearReleased" Content="Year Released:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="155,100.6,0,0" Grid.Row="1" Width="89" Height="23" Visibility="Visible"/>
+                <TextBox x:Name="tbxYearReleased" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="2" Margin="256,100.6,0,0" Grid.Row="1" Visibility="Visible"/>
+                <Label x:Name="lblDescription" Content="Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="155,259.6,0,0" Grid.Row="1" Width="101" Visibility="Visible" RenderTransformOrigin="1.517,0.5"/>
+                <TextBox x:Name="tbxDescription" HorizontalAlignment="Left" Height="78" TextWrapping="Wrap" VerticalAlignment="Top" Width="235" Grid.Column="2" Margin="256,238.6,0,0" Grid.Row="1" Visibility="Visible"/>
+                <Label x:Name="lblPrice" Content="Price:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="155,151.6,0,0" Grid.Row="1" Width="45" Visibility="Visible"/>
+                <TextBox x:Name="tbxPrice" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="2" Margin="256,151.6,0,0" Grid.Row="1" Visibility="Visible"/>
+                <Label x:Name="lblRating" Content="Avg Rating:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="155,192.6,0,0" Grid.Row="1" Visibility="Visible" Width="70"/>
+                <TextBox x:Name="tbxRating" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="2" Margin="256,192.6,0,0" Grid.Row="1" Visibility="Visible"/>
+                <ListBox x:Name="lstCompanyGameTab" HorizontalAlignment="Left" Height="351" VerticalAlignment="Top" Width="202" Grid.Column="1" Margin="24.2,9.6,0,0" Grid.Row="1" Grid.ColumnSpan="2"/>
+
+            </Grid>
+        </TabItem>
+
+
+        <TabItem Header="Update">
+            <Grid>
+
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Delete">
+            <Grid>
+                <ListBox x:Name="listBox" Margin="27,21,567,55"/>
+                <ListBox x:Name="listBox1" HorizontalAlignment="Left" Height="316" Margin="252,21,0,0" VerticalAlignment="Top" Width="184"/>
+            </Grid>
+
+        </TabItem>
+
 
     </TabControl>
 
