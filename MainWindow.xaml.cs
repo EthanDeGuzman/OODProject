@@ -47,15 +47,30 @@ namespace OODProject
             timer.Interval = new TimeSpan(0, 0, 1); // Go up every 1 second
             timer.Start(); //Starts the clock
 
-            using (StreamReader sr = new StreamReader(@"../Company.json"))
+            try
             {
-                string json = sr.ReadToEnd();
+                using (StreamReader sr = new StreamReader(@"../Company.json"))
+                {
+                    string json = sr.ReadToEnd();
 
-                //Convert JSON File to a List
-                allCompanies = JsonConvert.DeserializeObject<List<Company>>(json);
+                    //Convert JSON File to a List
+                    allCompanies = JsonConvert.DeserializeObject<List<Company>>(json);
 
-                //Display List to List Box
-                lstCompany.ItemsSource = allCompanies;
+                    //Display List to List Box
+                    lstCompany.ItemsSource = allCompanies;
+                }
+            }
+            catch (FileNotFoundException error)
+            {
+                Console.WriteLine($"The file was not found: '{error}'");
+            }
+            catch (DirectoryNotFoundException error)
+            {
+                Console.WriteLine($"The directory was not found: '{error}'");
+            }
+            catch (IOException error)
+            {
+                Console.WriteLine($"The file could not be opened: '{error}'");
             }
 
         }
@@ -154,14 +169,29 @@ namespace OODProject
                 Company tempCompany = new Company(Name, yearFormed, founders);
 
                 allCompanies.Add(tempCompany);
-            
-            //Code to Write to JSON
-            string json = JsonConvert.SerializeObject(allCompanies, Formatting.Indented);
-            using (StreamWriter sw = new StreamWriter(@"../Company.json"))
-            {
-                sw.Write(json);
-            }
 
+            //Code to Write to JSON
+            try
+            {
+                string json = JsonConvert.SerializeObject(allCompanies, Formatting.Indented);
+                using (StreamWriter sw = new StreamWriter(@"../Company.json"))
+                {
+                    sw.Write(json);
+                }
+            }
+            catch (FileNotFoundException error)
+            {
+                Console.WriteLine($"The file was not found: '{error}'");
+            }
+            catch (DirectoryNotFoundException error)
+            {
+                Console.WriteLine($"The directory was not found: '{error}'");
+            }
+            catch (IOException error)
+            {
+                Console.WriteLine($"The file could not be opened: '{error}'");
+            }
+            
             lstCompanyAdd.ItemsSource = null;
             lstCompanyAdd.ItemsSource = allCompanies;
         }
@@ -182,9 +212,24 @@ namespace OODProject
 
             //Code to Write to JSON
             string json = JsonConvert.SerializeObject(allCompanies, Formatting.Indented);
-            using (StreamWriter sw = new StreamWriter(@"../Company.json"))
+            try
             {
-                sw.Write(json);
+                using (StreamWriter sw = new StreamWriter(@"../Company.json"))
+                {
+                    sw.Write(json);
+                }
+            }
+            catch (FileNotFoundException error)
+            {
+                Console.WriteLine($"The file was not found: '{error}'");
+            }
+            catch (DirectoryNotFoundException error)
+            {
+                Console.WriteLine($"The directory was not found: '{error}'");
+            }
+            catch (IOException error)
+            {
+                Console.WriteLine($"The file could not be opened: '{error}'");
             }
         }
 
