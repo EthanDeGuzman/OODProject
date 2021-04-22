@@ -17,8 +17,12 @@ using System.Windows.Threading;
 using Newtonsoft.Json;
 
 /*
-    Extra Feature is Implementation of IComparer Method
+    Student Name: Ethan De Guzman
+    Student Id: S00199053
+    Github Link: 
+    Extra Feature: Implementation of IComparer Method
 */
+
 namespace OODProject
 {
     /// <summary>
@@ -47,6 +51,7 @@ namespace OODProject
             timer.Interval = new TimeSpan(0, 0, 1); // Go up every 1 second
             timer.Start(); //Starts the clock
 
+            // Try Catch for exception handling when dealing with JSON
             try
             {
                 using (StreamReader sr = new StreamReader(@"../Company.json"))
@@ -98,7 +103,7 @@ namespace OODProject
             lstCompany.ItemsSource = allCompanies;
         }
 
-        //IComparer Interface
+        //IComparer Interface for Extra Feature
         public class SortByYearByAscendingOrder : IComparer<Company>
         {
             public int Compare(Company x, Company y)
@@ -242,5 +247,48 @@ namespace OODProject
         {
             lstCompanyGameTab.ItemsSource = allCompanies;
         }
+
+        private void DeleteTab_Loaded(object sender, RoutedEventArgs e)
+        {
+            lstCompanyDelete.ItemsSource = allCompanies;
+        }
+
+        private void lstCompanyDelete_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Company selectedCompany = lstCompanyDelete.SelectedItem as Company;
+
+            if (selectedCompany != null)
+            {
+                lstGamesDelete.ItemsSource = selectedCompany.GamesList;
+            }
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private void btnUpdateSave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UpdateTab_Loaded(object sender, RoutedEventArgs e)
+        {
+            lstCompanyUpdateTab.ItemsSource = allCompanies;
+        }
+        private void lstCompanyUpdateTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Company selectedCompany = lstCompanyUpdateTab.SelectedItem as Company;
+
+            if (selectedCompany != null)
+            {
+                tbxUpdateCompanyName.Text = selectedCompany.CompanyName;
+                tbxUpdateYear.Text = selectedCompany.YearFormed.ToString();
+                tbxUpdateFounders.Text = selectedCompany.Founders;
+            }
+     
+        }
+
     }
 }
