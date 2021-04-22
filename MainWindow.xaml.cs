@@ -175,6 +175,10 @@ namespace OODProject
 
                 allCompanies.Add(tempCompany);
 
+                tbxCompanyName.Text = "";
+                tbxYearFormed.Text = "";
+                tbxFounders.Text = "";
+
             //Code to Write to JSON
             try
             {
@@ -199,6 +203,9 @@ namespace OODProject
             
             lstCompanyAdd.ItemsSource = null;
             lstCompanyAdd.ItemsSource = allCompanies;
+
+            lstCompany.ItemsSource = null;
+            lstCompany.ItemsSource = allCompanies;
         }
 
         private void btnAddGame_Click(object sender, RoutedEventArgs e)
@@ -214,6 +221,12 @@ namespace OODProject
             Games tempGame = new Games(name, yearReleased, price, description, avgRating);
 
             tempCompany.GamesList.Add(tempGame);
+
+            tbxGameName.Text = "";
+            tbxYearReleased.Text = "";
+            tbxPrice.Text = "";
+            tbxDescription.Text = "";
+            tbxRating.Text = "";
 
             //Code to Write to JSON
             string json = JsonConvert.SerializeObject(allCompanies, Formatting.Indented);
@@ -270,7 +283,9 @@ namespace OODProject
 
         private void btnUpdateSave_Click(object sender, RoutedEventArgs e)
         {
-
+            tbxUpdateCompanyName.Text = "";
+            tbxUpdateYear.Text = "";
+            tbxUpdateFounders.Text = "";
         }
 
         private void UpdateTab_Loaded(object sender, RoutedEventArgs e)
