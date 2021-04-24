@@ -94,6 +94,52 @@ namespace OODProject
             }
         }
 
+        //Method to Write to JSON File
+        public void writeJSON()
+        {
+            //Code to Write to JSON with exception handling
+            try
+            {
+                string json = JsonConvert.SerializeObject(allCompanies, Formatting.Indented);
+                using (StreamWriter sw = new StreamWriter(@"../Company.json"))
+                {
+                    sw.Write(json);
+                }
+            }
+            catch (FileNotFoundException error)
+            {
+                Console.WriteLine($"The file was not found: '{error}'");
+            }
+            catch (DirectoryNotFoundException error)
+            {
+                Console.WriteLine($"The directory was not found: '{error}'");
+            }
+            catch (IOException error)
+            {
+                Console.WriteLine($"The file could not be opened: '{error}'");
+            }
+        }
+
+        //Method for Temp Fix to refresh all List Boxes
+        public void refreshList()
+        {
+            // Temp Fix for List boxes breaking when its out of sync
+            lstCompanyAdd.ItemsSource = null;
+            lstCompanyAdd.ItemsSource = allCompanies;
+
+            lstCompany.ItemsSource = null;
+            lstCompany.ItemsSource = allCompanies;
+
+            lstCompanyGameTab.ItemsSource = null;
+            lstCompanyGameTab.ItemsSource = allCompanies;
+
+            lstCompanyDelete.ItemsSource = null;
+            lstCompanyDelete.ItemsSource = allCompanies;
+
+            lstCompanyUpdateTab.ItemsSource = null;
+            lstCompanyUpdateTab.ItemsSource = allCompanies;
+        }
+
         /*=======================================================================
                          All Methods for Button Clicks in Each Tab
           =======================================================================*/
@@ -150,43 +196,9 @@ namespace OODProject
                 tbxYearFormed.Text = "";
                 tbxFounders.Text = "";
 
-            //Code to Write to JSON
-            try
-            {
-                string json = JsonConvert.SerializeObject(allCompanies, Formatting.Indented);
-                using (StreamWriter sw = new StreamWriter(@"../Company.json"))
-                {
-                    sw.Write(json);
-                }
-            }
-            catch (FileNotFoundException error)
-            {
-                Console.WriteLine($"The file was not found: '{error}'");
-            }
-            catch (DirectoryNotFoundException error)
-            {
-                Console.WriteLine($"The directory was not found: '{error}'");
-            }
-            catch (IOException error)
-            {
-                Console.WriteLine($"The file could not be opened: '{error}'");
-            }
-            
-            // Temp Fix for List boxes breaking when its out of sync
-            lstCompanyAdd.ItemsSource = null;
-            lstCompanyAdd.ItemsSource = allCompanies;
+            writeJSON(); // Calls write code for JSON
 
-            lstCompany.ItemsSource = null;
-            lstCompany.ItemsSource = allCompanies;
-
-            lstCompanyGameTab.ItemsSource = null;
-            lstCompanyGameTab.ItemsSource = allCompanies;
-
-            lstCompanyDelete.ItemsSource = null;
-            lstCompanyDelete.ItemsSource = allCompanies;
-
-            lstCompanyUpdateTab.ItemsSource = null;
-            lstCompanyUpdateTab.ItemsSource = allCompanies;
+            refreshList(); // Refreshes the List
         }
 
         //Add Button for Games which adds the game to the game list of the selected company
@@ -210,34 +222,24 @@ namespace OODProject
             tbxDescription.Text = "";
             tbxRating.Text = "";
 
-            //Code to Write to JSON
-            string json = JsonConvert.SerializeObject(allCompanies, Formatting.Indented);
-            try
-            {
-                using (StreamWriter sw = new StreamWriter(@"../Company.json"))
-                {
-                    sw.Write(json);
-                }
-            }
-            catch (FileNotFoundException error)
-            {
-                Console.WriteLine($"The file was not found: '{error}'");
-            }
-            catch (DirectoryNotFoundException error)
-            {
-                Console.WriteLine($"The directory was not found: '{error}'");
-            }
-            catch (IOException error)
-            {
-                Console.WriteLine($"The file could not be opened: '{error}'");
-            }
-            
+            writeJSON();
         }
 
         //Delete button for removing data
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-           
+            Company selectedCompany = lstCompanyDelete.SelectedItem as Company;
+            if (selectedCompany != null)
+            {
+                allCompanies.Remove(selectedCompany);
+            }
+
+            writeJSON();
+
+            lstCompanyDelete.ItemsSource = allCompanies;
+            lstGamesDelete.ItemsSource = null;
+
+            refreshList();
         }
 
         //Save button for update to save new data
@@ -255,30 +257,13 @@ namespace OODProject
 
             allCompanies.Add(selectedCompany);
 
-            string json = JsonConvert.SerializeObject(allCompanies, Formatting.Indented);
-            try
-            {
-                using (StreamWriter sw = new StreamWriter(@"../Company.json"))
-                {
-                    sw.Write(json);
-                }
-            }
-            catch (FileNotFoundException error)
-            {
-                Console.WriteLine($"The file was not found: '{error}'");
-            }
-            catch (DirectoryNotFoundException error)
-            {
-                Console.WriteLine($"The directory was not found: '{error}'");
-            }
-            catch (IOException error)
-            {
-                Console.WriteLine($"The file could not be opened: '{error}'");
-            }
+            writeJSON();
 
             tbxUpdateCompanyName.Text = "";
             tbxUpdateYear.Text = "";
             tbxUpdateFounders.Text = "";
+
+            refreshList();
         }
 
         /*=======================================================================
