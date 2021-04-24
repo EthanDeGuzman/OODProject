@@ -25,15 +25,12 @@ using Newtonsoft.Json;
 
 namespace OODProject
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         //Create List
         List<Company> allCompanies = new List<Company>();
         List<Company> filteredCompanies = new List<Company>();
-
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -86,23 +83,6 @@ namespace OODProject
             tblkClock.Text = DateTime.Now.ToString(@"hh\:mm\:ss");
         }
 
-        private void cbxSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            lstCompany.ItemsSource = null;
-            string selectedSort = cbxSort.SelectedItem as string;
-
-            // Sort Company by Name or Year 
-            if (selectedSort == "Name")
-                allCompanies.Sort();
-            else
-            {
-                SortByYearByAscendingOrder eAsc = new SortByYearByAscendingOrder();
-                allCompanies.Sort(eAsc);
-            }
-                
-            lstCompany.ItemsSource = allCompanies;
-        }
-
         //IComparer Interface for Extra Feature
         public class SortByYearByAscendingOrder : IComparer<Company>
         {
@@ -114,18 +94,9 @@ namespace OODProject
             }
         }
 
-        //Selection Change method for listbox
-        private void lstCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Company selectedCompany = lstCompany.SelectedItem as Company;
-
-            if (selectedCompany != null)
-            {
-                lstGames.ItemsSource = selectedCompany.GamesList;
-                tblkCompany.Text = string.Format($"Company Name: {selectedCompany.CompanyName}" + $"\nYear Formed: {selectedCompany.YearFormed}" + $"\nFounders: {selectedCompany.Founders}");
-            }
-        }
-
+        /*=======================================================================
+                         All Methods for Button Clicks in Each Tab
+          =======================================================================*/
         //Search Bar
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
@@ -150,7 +121,7 @@ namespace OODProject
             }
             else
             {
-                foreach (var company in allCompanies)
+                foreach (var company in allCompanies) // Search for the name of the company
                 {
                     if (company.CompanyName.ToLower().Contains(search))
                     {
@@ -163,8 +134,8 @@ namespace OODProject
             tbxSearch.Text = "";
 
         }
-
-
+        
+        //Add Button for Company which adds the new data to the JSON
         private void btnAddCompany_Click(object sender, RoutedEventArgs e)
         {
                 string Name = tbxCompanyName.Text;
@@ -201,13 +172,24 @@ namespace OODProject
                 Console.WriteLine($"The file could not be opened: '{error}'");
             }
             
+            // Temp Fix for List boxes breaking when its out of sync
             lstCompanyAdd.ItemsSource = null;
             lstCompanyAdd.ItemsSource = allCompanies;
 
             lstCompany.ItemsSource = null;
             lstCompany.ItemsSource = allCompanies;
+
+            lstCompanyGameTab.ItemsSource = null;
+            lstCompanyGameTab.ItemsSource = allCompanies;
+
+            lstCompanyDelete.ItemsSource = null;
+            lstCompanyDelete.ItemsSource = allCompanies;
+
+            lstCompanyUpdateTab.ItemsSource = null;
+            lstCompanyUpdateTab.ItemsSource = allCompanies;
         }
 
+        //Add Button for Games which adds the game to the game list of the selected company
         private void btnAddGame_Click(object sender, RoutedEventArgs e)
         {
             Company tempCompany = lstCompanyGameTab.SelectedItem as Company;
@@ -249,49 +231,90 @@ namespace OODProject
             {
                 Console.WriteLine($"The file could not be opened: '{error}'");
             }
+            
         }
 
-        private void addCompanyTab_Loaded(object sender, RoutedEventArgs e)
-        {
-            lstCompanyAdd.ItemsSource = allCompanies;
-        }
-
-        private void AddGame_Loaded(object sender, RoutedEventArgs e)
-        {
-            lstCompanyGameTab.ItemsSource = allCompanies;
-        }
-
-        private void DeleteTab_Loaded(object sender, RoutedEventArgs e)
-        {
-            lstCompanyDelete.ItemsSource = allCompanies;
-        }
-
-        private void lstCompanyDelete_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Company selectedCompany = lstCompanyDelete.SelectedItem as Company;
-
-            if (selectedCompany != null)
-            {
-                lstGamesDelete.ItemsSource = selectedCompany.GamesList;
-            }
-        }
-
+        //Delete button for removing data
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
            
         }
 
+        //Save button for update to save new data
         private void btnUpdateSave_Click(object sender, RoutedEventArgs e)
         {
+            Company selectedCompany = lstCompanyUpdateTab.SelectedItem as Company;
+
+            if (selectedCompany != null)
+            {
+                selectedCompany.CompanyName = tbxUpdateCompanyName.Text;
+                selectedCompany.YearFormed = int.Parse(tbxUpdateYear.Text);
+                selectedCompany.Founders = tbxUpdateFounders.Text;
+            }
+            allCompanies.Remove(selectedCompany);
+
+            allCompanies.Add(selectedCompany);
+
+            string json = JsonConvert.SerializeObject(allCompanies, Formatting.Indented);
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(@"../Company.json"))
+                {
+                    sw.Write(json);
+                }
+            }
+            catch (FileNotFoundException error)
+            {
+                Console.WriteLine($"The file was not found: '{error}'");
+            }
+            catch (DirectoryNotFoundException error)
+            {
+                Console.WriteLine($"The directory was not found: '{error}'");
+            }
+            catch (IOException error)
+            {
+                Console.WriteLine($"The file could not be opened: '{error}'");
+            }
+
             tbxUpdateCompanyName.Text = "";
             tbxUpdateYear.Text = "";
             tbxUpdateFounders.Text = "";
         }
 
-        private void UpdateTab_Loaded(object sender, RoutedEventArgs e)
+        /*=======================================================================
+                         All Methods for Selection Change in Each Tab
+          =======================================================================*/
+        //Selection Change to populate and Sort List box on Info Tab
+        private void cbxSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            lstCompanyUpdateTab.ItemsSource = allCompanies;
+            lstCompany.ItemsSource = null;
+            string selectedSort = cbxSort.SelectedItem as string;
+
+            // Sort Company by Name or Year 
+            if (selectedSort == "Name")
+                allCompanies.Sort();
+            else
+            {
+                SortByYearByAscendingOrder eAsc = new SortByYearByAscendingOrder();
+                allCompanies.Sort(eAsc);
+            }
+
+            lstCompany.ItemsSource = allCompanies;
         }
+
+        //Selection Change method for listbox for Games List in Info Tab
+        private void lstCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Company selectedCompany = lstCompany.SelectedItem as Company;
+
+            if (selectedCompany != null)
+            {
+                lstGames.ItemsSource = selectedCompany.GamesList;
+                tblkCompany.Text = string.Format($"Company Name: {selectedCompany.CompanyName}" + $"\nYear Formed: {selectedCompany.YearFormed}" + $"\nFounders: {selectedCompany.Founders}");
+            }
+        }
+
+        //Selection Change to populate Text Boxes when a company is selected on Update Tab
         private void lstCompanyUpdateTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Company selectedCompany = lstCompanyUpdateTab.SelectedItem as Company;
@@ -302,8 +325,44 @@ namespace OODProject
                 tbxUpdateYear.Text = selectedCompany.YearFormed.ToString();
                 tbxUpdateFounders.Text = selectedCompany.Founders;
             }
-     
         }
 
+        //Selection Change to populate List box for Games List on Delete Tab
+        private void lstCompanyDelete_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Company selectedCompany = lstCompanyDelete.SelectedItem as Company;
+
+            if (selectedCompany != null)
+            {
+                lstGamesDelete.ItemsSource = selectedCompany.GamesList;
+            }
+        }
+
+        /*=======================================================================
+                         All Methods to Load List boxes in each Tab
+          =======================================================================*/
+        //Loads List box of Company to Add Company Tab
+        private void addCompanyTab_Loaded(object sender, RoutedEventArgs e)
+        {
+            lstCompanyAdd.ItemsSource = allCompanies;
+        }
+
+        //Loads List box of Company to Add Game Tab
+        private void AddGame_Loaded(object sender, RoutedEventArgs e)
+        {
+            lstCompanyGameTab.ItemsSource = allCompanies;
+        }
+
+        //Populates List box in Update Tab
+        private void UpdateTab_Loaded(object sender, RoutedEventArgs e)
+        {
+            lstCompanyUpdateTab.ItemsSource = allCompanies;
+        }
+
+        //Loads all companies to the list box in Delete Tab
+        private void DeleteTab_Loaded(object sender, RoutedEventArgs e)
+        {
+            lstCompanyDelete.ItemsSource = allCompanies;
+        }
     }
 }
