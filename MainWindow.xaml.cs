@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 /*
     Student Name: Ethan De Guzman
     Student Id: S00199053
-    Github Link: 
+    Github Link: https://github.com/EthanDeguzman/OODProject
     Extra Feature: Implementation of IComparer Method
 */
 
@@ -188,7 +188,9 @@ namespace OODProject
                 int yearFormed = int.Parse(tbxYearFormed.Text);
                 string founders = tbxFounders.Text;
 
-                Company tempCompany = new Company(Name, yearFormed, founders);
+                var rand = new Random();
+
+                Company tempCompany = new Company(Name, yearFormed, founders, rand.Next(10001));
 
                 allCompanies.Add(tempCompany);
 
@@ -295,7 +297,8 @@ namespace OODProject
             if (selectedCompany != null)
             {
                 lstGames.ItemsSource = selectedCompany.GamesList;
-                tblkCompany.Text = string.Format($"Company Name: {selectedCompany.CompanyName}" + $"\nYear Formed: {selectedCompany.YearFormed}" + $"\nFounders: {selectedCompany.Founders}");
+                tblkCompany.Text = string.Format($"Company Name: {selectedCompany.CompanyName}" + $"\nYear Formed: {selectedCompany.YearFormed}" 
+                + $"\nFounders: {selectedCompany.Founders}" + $"\nID: {selectedCompany.id}");
             }
         }
 
