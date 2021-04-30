@@ -70,7 +70,7 @@
                 <TextBox x:Name="tbxYearFormed" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="125,125.6,0,0" Grid.Row="1" Visibility="Visible" RenderTransformOrigin="-0.97,0.626"/>
                 <Label x:Name="lblFounders" Content="Founders:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="19,211.6,0,0" Grid.Row="1" Width="79" Visibility="Visible"/>
                 <TextBox x:Name="tbxFounders" HorizontalAlignment="Left" Height="107" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" Margin="120,178.6,0,0" Grid.Row="1" Visibility="Visible"/>
-                <ListBox x:Name="lstCompanyAdd" HorizontalAlignment="Left" Height="342" VerticalAlignment="Top" Width="284" Grid.Column="1" Margin="437.2,18.6,0,0" Grid.Row="1"/>
+                <ListBox x:Name="lstCompanyAdd" HorizontalAlignment="Left" Height="342" VerticalAlignment="Top" Width="284" Grid.Column="1" Grid.Row="1" Margin="90.4,18.6,0,0"/>
 
 
             </Grid>
