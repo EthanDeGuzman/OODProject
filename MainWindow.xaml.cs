@@ -207,24 +207,26 @@ namespace OODProject
         private void btnAddGame_Click(object sender, RoutedEventArgs e)
         {
             Company tempCompany = lstCompanyGameTab.SelectedItem as Company;
+            if (tempCompany != null)
+            {
+                string name = tbxGameName.Text;
+                int yearReleased = int.Parse(tbxYearReleased.Text);
+                double price = double.Parse(tbxPrice.Text);
+                string description = tbxDescription.Text;
+                string avgRating = tbxRating.Text;
 
-            string name = tbxGameName.Text;
-            int yearReleased = int.Parse(tbxYearReleased.Text);
-            double price = double.Parse(tbxPrice.Text);
-            string description = tbxDescription.Text;
-            string avgRating = tbxRating.Text;
+                Games tempGame = new Games(name, yearReleased, price, description, avgRating);
 
-            Games tempGame = new Games(name, yearReleased, price, description, avgRating);
+                tempCompany.GamesList.Add(tempGame);
 
-            tempCompany.GamesList.Add(tempGame);
+                tbxGameName.Text = "";
+                tbxYearReleased.Text = "";
+                tbxPrice.Text = "";
+                tbxDescription.Text = "";
+                tbxRating.Text = "";
 
-            tbxGameName.Text = "";
-            tbxYearReleased.Text = "";
-            tbxPrice.Text = "";
-            tbxDescription.Text = "";
-            tbxRating.Text = "";
-
-            writeJSON();
+                writeJSON();
+            }
         }
 
         //Delete button for removing data
@@ -352,5 +354,46 @@ namespace OODProject
         {
             lstCompanyDelete.ItemsSource = allCompanies;
         }
+
+        /*=======================================================================
+                         Example Database and Image Code 
+
+                var query = from c in db.GameList
+                where c.GameId == selectedGame.GameId
+                select c;
+
+                lstGames.ItemsSource = query.ToList();
+
+                <DataTemplate x:Key="lstGamesTemplate">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Path=CharacterImage}" Height="100"/>
+                        <TextBlock Text="{Binding Path=Name}" FontSize="20" Margin="10"/>
+                    </StackPanel>
+                </DataTemplate>
+                <ListBox ItemTemplate="{StaticResource lstGamesTemplate}" x:Name="lstGames"/>
+
+                public class GameData : DbContext {
+                public GameData() : base("MyGameData") { }
+
+                public DbSet<Games> Games { get; set; }
+                }
+
+                GameData db = new GameData();
+
+                using (db)
+                {
+                Game g1 = new Game() { GameId = 1 .... };
+                Game g2 = new Game() { GameId = 2 ....};
+
+                db.Game.Add(g1);
+                db.Game.Add(g2);
+
+                Console.WriteLine("Added Games to database");
+
+                db.SaveChanges();
+                Console.WriteLine("Saved to db");
+                }
+          =======================================================================*/
+
     }
 }
